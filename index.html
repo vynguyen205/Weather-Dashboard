@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />  
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -18,7 +19,7 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./assets/styles.css"/>
     <title>Weather Dashboard</title>
   </head>
 
@@ -36,25 +37,12 @@
           <div class="collapse navbar-collapse" id="navbarColor03">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link active" href="./index.html">Home
-                  <!-- <span class="visually-hidden">(current)</span> -->
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="">Something</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item"  href="#">Action</a>
-                  <a class="dropdown-item"  href="#">Other</a>
-                  <a class="dropdown-item"  href="#">Other</a>
-                  <a class="dropdown-item"  href="#">Other</a>
-                  <a class="dropdown-item"  href="#">Other</a>
+                <a class="nav-link active" href="./index.html">Home</a>
               </li>
             </ul>
             <form id="searchForm">
               <input type="text" class="form-control" id="searchText" placeholder="Search City or Zip Code ...">
+              <!-- <button class="searchBtn">Search</button> -->
             </form>
           </div>
         </div>
@@ -62,8 +50,14 @@
     </header>
 
 
-    <div class="container">
-      <!-- Weather -->
+    <div class="mainContainer">
+      <!-- Weather cards-->
+      <div class="weatherContainer"></div>
+
+      <div class="futureForecast"></div>
+
+      <div class="mainWeatherCards"></div>
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -72,8 +66,8 @@
     <script src="./assets/script.js"></script>
 </body>
 
-<footer>
-    Made by your fellow developers in Orange County, CA © 2022 All rights reserved.
-</footer>
+<!-- <footer>
+    Made by your fellow developer in Orange County, CA © 2022 All rights reserved.
+</footer> -->
 
 </html>
