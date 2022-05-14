@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.mainContainer {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+}
+.weatherContainer {
+    display: flex;
+    justify-content: center; 
+    width: 25%;
+    height: 100vh;
+}
+
+.forecastContainer{
+    width: 75%;
+    height: 100vh;
+    background-color: rgba(197, 213, 225, 0.82);
+}
+
+#searchText {
+    width: fit-content;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+
+.cityWeatherContainer {
+    width: fit-content;
+    height: fit-content;
+    box-sizing: content-box;
+    background-color: rgba(172, 204, 224, 0.868);
+    border-radius: 10px;
+    padding: 30px;
+    font-size: 20px;
+    text-align: center;
+}
+.cityWeatherContainer div {
+    margin: 20px 0;
+}

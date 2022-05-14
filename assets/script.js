@@ -41,15 +41,18 @@ function getLocationWeather(city) {
     })
     .then(function (data){
         console.log(data);
-
+        //grabbing lat and lon from data
         lat = data[0].lat;
         lon = data[0].lon;
-
+        //pasting the grabbed lat and lon to get weather info
         getWeatherInfo(lat, lon)
+        //display city name
+        CTName.textContent = city.toUpperCase();
+
     })
 
 } 
-getLocationWeather("Tra Vinh")
+getLocationWeather("Paris")
 
 // one call Fecth
 function getWeatherInfo (latitude, longitude){
@@ -63,11 +66,12 @@ function getWeatherInfo (latitude, longitude){
         //get date
         var UTCDate = data.current.dt;
         var locationDate = new Date((UTCDate*1000));
-            todaysDate.textContent= locationDate;
+        var formatedDate = locationDate.toLocaleDateString();
+            todaysDate.textContent= formatedDate;
 
         //set vars for weather Information
         var weatherIconMain = data.current.weather[0].icon;
-        
+            weatherIcon.src =  `http://openweathermap.org/img/wn/${weatherIconMain}.png`
         var weatherTemp = data.current.temp;
             displayTemp.textContent = `${weatherTemp} °F`;
         var weatherFeels = data.current.feels_like;
@@ -84,4 +88,10 @@ function getWeatherInfo (latitude, longitude){
             UVIndex.textContent = `UV Index: ${weatherUV} %`
 
     })
+}
+
+//filter search results and save it 
+
+function searchCity(searchedCT) {
+
 }
