@@ -52,11 +52,35 @@
 
     <div class="mainContainer">
       <!-- Weather cards-->
-      <div class="weatherContainer"></div>
 
-      <div class="futureForecast"></div>
+      <div class="weatherContainer" class="rightSide">
+        <!-- display current weather, for searched city -->
+        <div class="cityName"></div>
+        <div class="todayDate"> Current </div>
+        <!-- Display weather info -->
+        <div class="weatherInfo">
+          <img src="" alt="weather icon" class="weatherIcon">
+          <div class="displayTemp"></div>
+          <span class="feelsLike"></span>
+          <div class="discription"></div>
+          <div class="flex-cloudVisibility">
+            <div class="clouds"></div>
+            <div class="visibility"></div>
+          </div>
+          <div class="flex-humidUV">
+            <div class="humid"></div>
+            <div class="UVIndex"></div>
+          </div>
+        </div>
 
-      <div class="mainWeatherCards"></div>
+      </div>
+
+      <div class="forecastContainer">
+        <!-- display future forecast -->
+        <span class="forecastTitle" class="hidden">5-DAY FORECAST</span>
+        <div class="mainWeatherCards" class="hidden"></div>
+      </div>
+
 
     </div>
 
