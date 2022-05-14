@@ -8,6 +8,7 @@ var lon;
 //DOM Element 
 var searchForm = document.querySelector("#searchForm");
 var searchText = document.querySelector("#searchText");
+var searchBtn = document.querySelector(".searchBtn");
 //DOM Element <BODY>
 var weatherContainer = document.querySelector(".weatherContainer");
 var CTName = document.querySelector(".cityName");
@@ -52,7 +53,7 @@ function getLocationWeather(city) {
     })
 
 } 
-getLocationWeather("Paris")
+getLocationWeather()
 
 // one call Fecth
 function getWeatherInfo (latitude, longitude){
@@ -71,22 +72,22 @@ function getWeatherInfo (latitude, longitude){
 
         //set vars for weather Information
         var weatherIconMain = data.current.weather[0].icon;
-            weatherIcon.src =  `http://openweathermap.org/img/wn/${weatherIconMain}.png`
+            weatherIcon.src =  `http://openweathermap.org/img/wn/${weatherIconMain}@4x.png`
         var weatherTemp = data.current.temp;
             displayTemp.textContent = `${weatherTemp} °F`;
         var weatherFeels = data.current.feels_like;
-            feelsLike.textContent = `Feels Like: ${weatherFeels} °F`;
-        // var weatherDescription = data.current.weather[0].description;
-        //     description.textContent = weatherDescription;
+            feelsLike.textContent = `Feels Like | ${weatherFeels} °F`;
+        var weatherDescription = data.current.weather[0].description;
+            description.textContent = weatherDescription;
         // var weatherClouds = data.current.clouds;
         //     clouds.textContent = weatherClouds
         // var weatherVisibility = data.current.visibility;
         //     visibility.textContent = `Visibility: ${weatherVisibility}`;
         var weatherHumid = data.current.humidity;
-            humidity.textContent = `Humidity: ${weatherHumid} %`;
+        humidity.textContent = `Hum | ${weatherHumid} %`;
         var weatherUV = Math.round(data.current.uvi * 10) / 10;
-            UVIndex.textContent = `UV Index: ${weatherUV} %`
-
+        UVIndex.textContent = `UVI | ${weatherUV} %`;
+        
     })
 }
 
@@ -94,4 +95,9 @@ function getWeatherInfo (latitude, longitude){
 
 function searchCity(searchedCT) {
 
+    
 }
+
+searchBtn.addEventListener("click", function() {
+    getLocationWeather(searchText.value.trim()); 
+})
