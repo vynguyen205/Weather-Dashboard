@@ -1,5 +1,5 @@
 //global variables
-var searchHist= [];
+// var searchHist= [];
 var oneCallApi = `https://api.openweathermap.org/data/2.5/onecall`;
 var geoApi = `http://api.openweathermap.org/geo/1.0/direct`;
 var lat;
@@ -99,8 +99,8 @@ function getWeatherInfo (latitude, longitude){
 
         //get date
         var UTCDate = data.current.dt;
-        var locationDate = new Date(UTCDate * 1000)
-        var formatedDate = days[locationDate.getDay()];
+        var locationDate = new Date(UTCDate * 1000) // 5/15/22
+        var formatedDate = days[locationDate.getDay()]; //sun
             todaysDate.textContent= formatedDate;
 
         //set vars for weather Information
@@ -117,32 +117,32 @@ function getWeatherInfo (latitude, longitude){
         var weatherUV = Math.round(data.current.uvi * 10) / 10;
             UVIndex.textContent = `UV | ${weatherUV} %`;
 
-        //loop through daily forecast
-        for (var d = 0; d < 8; d++){
+        let output = '';
+			//loop through daily forecast
+			for (var d = 1; d < 7; d++) {
+				var dailyDt = data.daily[d].dt;
+				var dailyDtConvert = new Date(dailyDt * 1000);
+				var dailyDtFormat = days[dailyDtConvert.getDay()];
 
-            var dailyDt = data.daily[d].dt;
-            var dailyDtConvert = new Date(dailyDt * 1000);
-            var dailyDtFormat = days[dailyDtConvert.getDay()];
+				var dailyWeather = data.daily[d].temp.max;
 
-            var dailyWeather = data.daily[d].temp.max;
+				var dailyIcon = data.daily[d].weather[0].icon;
 
-            var dailyIcon = data.daily[d].weather[0].icon;
-
-            let output = /*html*/ `
+				output += /*html*/ `
                 <div class="eachCard">
-                    <img class="dailyWeatherIcon"  src= "http://openweathermap.org/img/wn/${dailyIcon}@2x.png"alt= "Weather Icon">
-                    <div class="dailyDt">${dailyDtFormat}</div>
-                    <div class="dailyTemp">${dailyWeather} °F</div>
+                    <div class="flex">
+                        <img class="dailyWeatherIcon"  src= "http://openweathermap.org/img/wn/${dailyIcon}@4x.png"alt= "Weather Icon">
+                        <div class="dailyDt">${dailyDtFormat}</div>
+                        <div class="dailyTemp">${dailyWeather} °F</div>
+                    </div>
                 </div>
             `;
-            $('#dailyForecast').html(output);
-        }       
-
-    })
+			}
+			$('#dailyForecast').html(output);
+		});
 }
 
 //filter search results and save it 
-
 
 function searchCity(event) {
     event.preventDefault();

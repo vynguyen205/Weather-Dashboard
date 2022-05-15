@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -14,15 +16,27 @@
     font-size: 50px;
 }
 
-.weatherCardContainer {
+.mainWeatherCards {
     display: flex;
-    flex: row wrap;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-self: center;
 }
+
 
 .eachCard {
     border: solid 1px; 
-    width: fit-content;
-    height: fit-content;
+    border-radius: 25px;
+    width: 200px;
+    height: 270px;
+    margin: 15px;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 
 .weatherContainer {
