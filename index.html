@@ -34,9 +34,22 @@
       <!-- Weather cards-->
 
       <div class="forecastContainer">
-        <!-- display future forecast -->
-        <span class="forecastTitle" class="hidden">5-DAY FORECAST</span>
-        <div class="mainWeatherCards" class="hidden"></div>
+        <div class="timeDtContainer">
+          <div class="currentTime"></div>
+          <div class="dayAndDt"></div>
+          <!-- good morning, afternoon or evening -->
+          <div class="greeting"></div>
+        </div>
+        <!-- <span class="forecastTitle" class="hidden"></span> -->
+        <div class="weatherCardContainer">
+          <div class="mainWeatherCards" class="hidden">
+            <div class="eachCard" id="dailyForecast">
+              <!-- <div class="dailyWeatherIcon"></div>
+              <div class="dailyDt"></div>
+              <div class="dailyTemp"></div> -->
+            </div>
+          </div>
+        </div>
       </div>
       
       <div class="weatherContainer">
