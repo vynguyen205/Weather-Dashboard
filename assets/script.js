@@ -8,7 +8,7 @@ var today = new Date ();
 //getHours() -- current hour between 0-23
 var hour = today.getHours();
 //getMinutes() -- current minutes between 0-59
-var minute = today.getMinutes()
+var minute = today.getMinutes();
 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 //DOM Element Search
@@ -50,14 +50,15 @@ function getTime () {
     //conditional statement for am and pm, and greetings
     if (time < 12){
         currentTime.innerHTML = time + "AM";
-        greeting.textContent = "Good Morning!"
-
+        greeting.textContent = "🌞 Good Morning!"
     //current time is 6pm or greater, greet evening
-    } else if (time >= 18) {
-        greeting.textContent = "Good evening!"
-    } else {
+    } else if (time >= 12 && time < 18) {
         currentTime.innerHTML = time + "PM";
-        greeting.textContent = "Good Afternoon!"
+        greeting.textContent = "☀️ Good Afternoon!"
+    } 
+    else {
+        currentTime.innerHTML = time + "PM";
+        greeting.textContent = "😴 Good Evening!"
     }
 
 }
@@ -80,7 +81,7 @@ function getLocationWeather(city) {
         //pasting the grabbed lat and lon to get weather info
         getWeatherInfo(lat, lon)
         //display city name
-        CTName.textContent = city.toUpperCase();
+        CTName.textContent = "📍 " + city;
     })
 
 } 
@@ -108,19 +109,20 @@ function getWeatherInfo (latitude, longitude){
             weatherIcon.src =  `http://openweathermap.org/img/wn/${weatherIconMain}@4x.png`
 
         var weatherTemp = data.current.temp;
-            displayTemp.textContent = `${weatherTemp} °`;
+            displayTemp.textContent = `${Math.ceil(weatherTemp)}°`;
 
         var weatherFeels = data.current.feels_like;
-            feelsLike.textContent = `Feels Like | ${weatherFeels} °`;
+            feelsLike.textContent = `RealFeel | ${Math.ceil(weatherFeels)}°`;
 
         var weatherDescription = data.current.weather[0].description;
             description.textContent = weatherDescription;
 
         var weatherHumid = data.current.humidity;
-            humidity.textContent = `Hum | ${weatherHumid} %`;
+            humidity.textContent = `Hum | ${weatherHumid}%`;
 
         var weatherUV = Math.round(data.current.uvi * 10) / 10;
-            UVIndex.textContent = `UV | ${weatherUV} %`;
+            UVIndex.textContent = `UV | ${weatherUV}%`;
+
 
         let output = '';
 			//loop through daily forecast
@@ -136,7 +138,7 @@ function getWeatherInfo (latitude, longitude){
                     <div class="flex">
                         <img class="dailyWeatherIcon"  src= "http://openweathermap.org/img/wn/${dailyIcon}@4x.png"alt= "Weather Icon">
                         <div class="dailyDt">${dailyDtFormat}</div>
-                        <div class="dailyTemp">${dailyWeather} °</div>
+                        <div class="dailyTemp">${Math.ceil(dailyWeather)}°</div>
                     </div>
                 </div>
             `;
@@ -186,22 +188,25 @@ function displayStorage (){
         
         output += /*html*/ `
             <div class="searchHistory">           
-            <button class="historyBtn" data-id="${displayHistory[i]}">${displayHistory[i]}</button>
+                <button class="historyBtn" data-id="${displayHistory[i]}">${displayHistory[i]}</button>
             </div>
         `;
     }
     $('#displayHist').html(output);
     
+    var histBtn = document.querySelector(".historyBtn");
+    for (var b = 0; b < histBtn.length; b++) {
+        var buttons = histBtn[b];
+        buttons.addEventListener("click", function(event) {
+            event.preventDefault();
+            var value = event.target.getAttribute("data-id");
+            getLocationWeather(value);
+        });
+    
+    }
 }
 
 displayStorage();
 
-var histBtn = document.querySelector(".historyBtn");
-for (var b = 0; b < histBtn.length; b++) {
-    histBtn[b].addEventListener("click", function(event) {
-        var value = event.target.getAttribute("data-id");
-        getLocationWeather(value);
-    });
-}
-
 searchBtn.addEventListener("click", searchCity);
+

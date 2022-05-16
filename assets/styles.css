@@ -4,6 +4,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    letter-spacing: 3px;
+    font-weight: 300;
 }
 
 .mainContainer {
@@ -21,6 +23,10 @@
     font-size: 50px;
     font-weight: 600;
     color:rgb(160, 183, 246)
+}
+
+.greeting {
+    font-size: 25px;
 }
 
 .mainWeatherCards {
@@ -88,10 +94,14 @@
     height: fit-content;
     box-sizing: content-box;
     background-color: rgba(172, 204, 224, 0.868);
-    border-radius: 10px;
+    border-radius: 27px;
     padding: 30px;
+    margin: 25px 0;
     font-size: 20px;
     text-align: center;
+    background: rgb(181,189,217);
+    background: rgb(181,189,217);
+    background: linear-gradient(90deg, rgba(181,189,217,0.5835734870317003) 100%, rgba(214,215,219,0.76109375) 100%);    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 .cityWeatherContainer div {
     margin: 10px 30px;
@@ -101,19 +111,53 @@
     display: flex;
     justify-content: flex-start;
     translate: initial;
-    transform: translate(-29px, -7px);
+    transform: translate(-35px, -28px);
 }
 
-.todayDate, .description {
-    font-size: 30px;
-    font-weight: 100;
+.cityName {
+    font-size: 25px;
+    font-weight: 600;
     text-transform: capitalize;
+    color:rgb(255, 255, 255)
+}
+
+.todayDate {
+    font-size: 30px;
+    text-transform: capitalize;
+    /* color: rgba(116, 116, 116, 0.777) */
+}
+
+.description {
+    font-size: 17px;
+    text-transform: capitalize;
+    color: rgba(116, 116, 116, 0.777);
 }
 
 .displayTemp {
-    font-size: 50px;
+    font-size: 65px;
     font-weight: 700;
-    color: rgba(245, 245, 245, 0.93)
+    color: rgb(245, 245, 245);
 }
 
+.historyContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.historyBtn {
+    border: none;
+    border-radius: 25px;
+    font-size: 30px;
+    font-weight: 200;
+    text-transform: capitalize;
+    color: grey;
+    margin: 15px;
+    padding: 10px;
+    background: rgb(191,159,224);
+    background: linear-gradient( 90deg, 
+      rgba(191,159,224,0.3717579250720461) 1%, 
+      rgba(222,207,240,0.3717579250720461) 100%, 
+      rgba(214,215,219,0.76109375) 100%);
+}
 
