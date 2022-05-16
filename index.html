@@ -53,12 +53,14 @@
           </form>
           <!-- display current weather, for searched city -->
           <div class="cityWeatherContainer">
-            <div class="cityName"></div>
-            <div class="todayDate"></div>
+            <div class="cityNameContainer">
+              <div class="cityName"></div>
+            </div>
             <!-- Display weather info -->
             <div class="weatherInfo">
-              <img src="" alt="weather icon" class="weatherIcon">
+              <div class="todayDate"></div>
               <div class="description"></div>
+              <img src="" alt="weather icon" class="weatherIcon">
               <div class="displayTemp"></div>
               <span class="feelsLike"></span>
               <div class="flex-cloudVisibility">
@@ -69,10 +71,9 @@
                 <div class="humid"></div>
                 <div class="UVIndex"></div>
               </div>
-              <div class="searchHistory"></div>
-              
             </div>
           </div>
+          <div class="historyContainer" id="displayHist"></div>
         </div>
 
       </div>

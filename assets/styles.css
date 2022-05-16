@@ -12,8 +12,15 @@
     flex-direction: row;
 }
 
+.timeDtContainer {
+    margin: 30px;
+    padding: 30px;
+}
+
 .currentTime {
     font-size: 50px;
+    font-weight: 600;
+    color:rgb(160, 183, 246)
 }
 
 .mainWeatherCards {
@@ -49,16 +56,32 @@
 .forecastContainer{
     width: 75%;
     height: 100vh;
-    background-color: rgba(197, 213, 225, 0.82);
+    background-color: rgba(218, 222, 226, 0.738);
 }
 
+#searchForm {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
 
 #searchText {
     width: fit-content;
     margin-bottom: 20px;
+    border-radius: 20px;
     padding: 20px;
 }
 
+.searchBtn {
+    width: fit-content;
+    height: fit-content;
+    border: none;
+    border-radius: 20px;
+    margin-left: 10px;
+    padding: 10px;
+    font-size: 15px;
+    color: rgba(120, 117, 117, 0.635);
+}
 
 .cityWeatherContainer {
     width: fit-content;
@@ -71,5 +94,26 @@
     text-align: center;
 }
 .cityWeatherContainer div {
-    margin: 20px 0;
+    margin: 10px 30px;
 }
+
+.cityNameContainer {
+    display: flex;
+    justify-content: flex-start;
+    translate: initial;
+    transform: translate(-29px, -7px);
+}
+
+.todayDate, .description {
+    font-size: 30px;
+    font-weight: 100;
+    text-transform: capitalize;
+}
+
+.displayTemp {
+    font-size: 50px;
+    font-weight: 700;
+    color: rgba(245, 245, 245, 0.93)
+}
+
+

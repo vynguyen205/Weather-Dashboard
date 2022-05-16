@@ -9,7 +9,7 @@ var today = new Date ();
 var hour = today.getHours();
 //getMinutes() -- current minutes between 0-59
 var minute = today.getMinutes()
-var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 //DOM Element Search
 var searchForm = document.querySelector("#searchForm");
@@ -106,14 +106,19 @@ function getWeatherInfo (latitude, longitude){
         //set vars for weather Information
         var weatherIconMain = data.current.weather[0].icon;
             weatherIcon.src =  `http://openweathermap.org/img/wn/${weatherIconMain}@4x.png`
+
         var weatherTemp = data.current.temp;
-            displayTemp.textContent = `${weatherTemp} °F`;
+            displayTemp.textContent = `${weatherTemp} °`;
+
         var weatherFeels = data.current.feels_like;
-            feelsLike.textContent = `Feels Like | ${weatherFeels} °F`;
+            feelsLike.textContent = `Feels Like | ${weatherFeels} °`;
+
         var weatherDescription = data.current.weather[0].description;
             description.textContent = weatherDescription;
+
         var weatherHumid = data.current.humidity;
             humidity.textContent = `Hum | ${weatherHumid} %`;
+
         var weatherUV = Math.round(data.current.uvi * 10) / 10;
             UVIndex.textContent = `UV | ${weatherUV} %`;
 
@@ -123,9 +128,7 @@ function getWeatherInfo (latitude, longitude){
 				var dailyDt = data.daily[d].dt;
 				var dailyDtConvert = new Date(dailyDt * 1000);
 				var dailyDtFormat = days[dailyDtConvert.getDay()];
-
 				var dailyWeather = data.daily[d].temp.max;
-
 				var dailyIcon = data.daily[d].weather[0].icon;
 
 				output += /*html*/ `
@@ -133,7 +136,7 @@ function getWeatherInfo (latitude, longitude){
                     <div class="flex">
                         <img class="dailyWeatherIcon"  src= "http://openweathermap.org/img/wn/${dailyIcon}@4x.png"alt= "Weather Icon">
                         <div class="dailyDt">${dailyDtFormat}</div>
-                        <div class="dailyTemp">${dailyWeather} °F</div>
+                        <div class="dailyTemp">${dailyWeather} °</div>
                     </div>
                 </div>
             `;
@@ -157,9 +160,13 @@ function searchCity(event) {
     Otherwise, just stick with the value we've just parsed out.*/
     var array = parsedValue || [];
 
-    //If our parsed/empty array doesn't already have this value in it...then  it
+    /*If our parsed/empty array doesn't already have this value in it
+    put it in the front and pop one off the end if array is too big.*/
     if (array.indexOf(searchValue) === -1){
-        array.push(searchValue);
+        array.unshift(searchValue);
+            if(array.length > 2) {
+                array.pop();
+            }
 
         //turn the array WITH THE NEW VALUE IN IT into a string to prepare it to be stored in localStorage
         var newValue = JSON.stringify(array);
@@ -172,13 +179,29 @@ function searchCity(event) {
 
 function displayStorage (){
     
-     var displayHistory= JSON.parse(localStorage.getItem("city")) || [];
+     var displayHistory = JSON.parse(localStorage.getItem("city")); 
 
-     if (displayHistory) {
-
-     }
-
+     let output= '';
+     for (var i = 0; i < displayHistory.length; i++) {
+        
+        output += /*html*/ `
+            <div class="searchHistory">           
+            <button class="historyBtn" data-id="${displayHistory[i]}">${displayHistory[i]}</button>
+            </div>
+        `;
+    }
+    $('#displayHist').html(output);
     
+}
+
+displayStorage();
+
+var histBtn = document.querySelector(".historyBtn");
+for (var b = 0; b < histBtn.length; b++) {
+    histBtn[b].addEventListener("click", function(event) {
+        var value = event.target.getAttribute("data-id");
+        getLocationWeather(value);
+    });
 }
 
 searchBtn.addEventListener("click", searchCity);
