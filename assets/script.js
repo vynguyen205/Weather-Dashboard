@@ -179,34 +179,60 @@ function searchCity(event) {
 
 //adding to local storage
 
-function displayStorage (){
-    
-     var displayHistory = JSON.parse(localStorage.getItem("city")); 
+function displayStorage() {
+	var displayHistory = JSON.parse(localStorage.getItem('city'));
 
-     let output= '';
-     for (var i = 0; i < displayHistory.length; i++) {
-        
-        output += /*html*/ `
+	let output = '';
+	if (displayHistory) {
+		for (var i = 0; i < displayHistory.length; i++) {
+			output += /*html*/ `
             <div class="searchHistory">           
-                <button class="historyBtn" data-id="${displayHistory[i]}">${displayHistory[i]}</button>
+            <button class="historyBtn" data-id="${displayHistory[i]}">${displayHistory[i]}</button>
             </div>
         `;
-    }
-    $('#displayHist').html(output);
-    
-    var histBtn = document.querySelector(".historyBtn");
-    for (var b = 0; b < histBtn.length; b++) {
-        var buttons = histBtn[b];
-        buttons.addEventListener("click", function(event) {
-            event.preventDefault();
-            var value = event.target.getAttribute("data-id");
-            getLocationWeather(value);
-        });
-    
-    }
+		}
+		$('#displayHist').html(output);
+	} else {
+		console.log('No History to display');
+	}
 }
 
 displayStorage();
+
+var histBtn = document.getElementsByClassName('historyBtn');
+for (var b = 0; b < histBtn.length; b++) {
+	histBtn[b].addEventListener('click', function (event) {
+		var value = event.target.getAttribute('data-id');
+		getLocationWeather(value);
+	});
+}
+
+// function displayStorage (){
+    
+//      var displayHistory = JSON.parse(localStorage.getItem("city")); 
+
+//      let output= '';
+//      for (var i = 0; i < displayHistory.length; i++) {
+        
+//         output += /*html*/ `
+//             <div class="searchHistory">           
+//                 <button class="historyBtn" data-id="${displayHistory[i]}">${displayHistory[i]}</button>
+//             </div>
+//         `;
+//     }
+//     $('#displayHist').html(output);
+    
+//     var histBtn = document.querySelector(".historyBtn");
+//     for (var b = 0; b < histBtn.length; b++) {
+//         var buttons = histBtn[b];
+//         buttons.addEventListener("click", function(event) {
+//             event.preventDefault();
+//             var value = event.target.getAttribute("data-id");
+//             getLocationWeather(value);
+//         });
+    
+//     }
+// }
 
 searchBtn.addEventListener("click", searchCity);
 
