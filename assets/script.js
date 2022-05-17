@@ -5,6 +5,7 @@ var geoApi = `http://api.openweathermap.org/geo/1.0/direct`;
 var lat;
 var lon;
 var today = new Date ();
+var timeToday = moment();
 //getHours() -- current hour between 0-23
 var hour = today.getHours();
 //getMinutes() -- current minutes between 0-59
@@ -45,14 +46,15 @@ var weatherCards = document.querySelector(".mainWeatherCards");
 const apiKey = "b256ae4b79d834242cabefb17b1c0012";
 
 function getTime () {
-    var time = (hour - 12) + ":" + minute;
+    // var time = (hour - 12) + ":" + minute;
+    var time = timeToday.format("dddd, MMMM Do, h:mm");
     
-    //conditional statement for am and pm, and greetings
-    if (time < 12){
+    // conditional statement for am and pm, and greetings
+    if (hour < 12){
         currentTime.innerHTML = time + "AM";
         greeting.textContent = "🌞 Good Morning!"
     //current time is 6pm or greater, greet evening
-    } else if (time >= 12 && time < 18) {
+    } else if (hour >= 12 && hour < 18) {
         currentTime.innerHTML = time + "PM";
         greeting.textContent = "☀️ Good Afternoon!"
     } 
@@ -166,6 +168,7 @@ function searchCity(event) {
     put it in the front and pop one off the end if array is too big.*/
     if (array.indexOf(searchValue) === -1){
         array.unshift(searchValue);
+        //setting limit in localStorage
             if(array.length > 2) {
                 array.pop();
             }
@@ -174,10 +177,22 @@ function searchCity(event) {
         var newValue = JSON.stringify(array);
 
         localStorage.setItem ("city", newValue);
+
+        removeLocal(newValue);
     }
 }
 
 //adding to local storage
+
+function removeLocal(targetValue) {
+
+    for (var i = 0;i<newValue.length;i++){
+          if (newValue[i]===targetValue){
+              newValue.splice(i,1);
+          };
+        }
+    localStorage.setItem("city",JSON.stringify(newValue))
+}
 
 function displayStorage() {
 	var displayHistory = JSON.parse(localStorage.getItem('city'));
@@ -187,7 +202,7 @@ function displayStorage() {
 		for (var i = 0; i < displayHistory.length; i++) {
 			output += /*html*/ `
             <div class="searchHistory">           
-            <button class="historyBtn" data-id="${displayHistory[i]}">${displayHistory[i]}</button>
+            <button class="historyBtn" data-hover="⚡️" data-id="${displayHistory[i]}">${displayHistory[i]}</button>
             </div>
         `;
 		}
@@ -204,35 +219,12 @@ for (var b = 0; b < histBtn.length; b++) {
 	histBtn[b].addEventListener('click', function (event) {
 		var value = event.target.getAttribute('data-id');
 		getLocationWeather(value);
+        var remove = event.target.getAttribute('data-hover');
+        removeLocal(remove);
+        location.reload()
 	});
 }
 
-// function displayStorage (){
-    
-//      var displayHistory = JSON.parse(localStorage.getItem("city")); 
-
-//      let output= '';
-//      for (var i = 0; i < displayHistory.length; i++) {
-        
-//         output += /*html*/ `
-//             <div class="searchHistory">           
-//                 <button class="historyBtn" data-id="${displayHistory[i]}">${displayHistory[i]}</button>
-//             </div>
-//         `;
-//     }
-//     $('#displayHist').html(output);
-    
-//     var histBtn = document.querySelector(".historyBtn");
-//     for (var b = 0; b < histBtn.length; b++) {
-//         var buttons = histBtn[b];
-//         buttons.addEventListener("click", function(event) {
-//             event.preventDefault();
-//             var value = event.target.getAttribute("data-id");
-//             getLocationWeather(value);
-//         });
-    
-//     }
-// }
 
 searchBtn.addEventListener("click", searchCity);
 

@@ -101,7 +101,8 @@
     text-align: center;
     background: rgb(181,189,217);
     background: rgb(181,189,217);
-    background: linear-gradient(90deg, rgba(181,189,217,0.5835734870317003) 100%, rgba(214,215,219,0.76109375) 100%);    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background: linear-gradient(90deg, rgba(181,189,217,0.5835734870317003) 100%, rgba(214,215,219,0.76109375) 100%);   
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 .cityWeatherContainer div {
     margin: 10px 30px;
@@ -146,6 +147,7 @@
 }
 
 .historyBtn {
+    position: relative;
     border: none;
     border-radius: 25px;
     font-size: 30px;
@@ -154,10 +156,32 @@
     color: grey;
     margin: 15px;
     padding: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     background: rgb(191,159,224);
     background: linear-gradient( 90deg, 
       rgba(191,159,224,0.3717579250720461) 1%, 
       rgba(222,207,240,0.3717579250720461) 100%, 
       rgba(214,215,219,0.76109375) 100%);
+}
+
+.historyBtn:before {
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    background-color: transparent;
+    text-align: center;
+    padding: 6px;
+    font-size: 40px;
+    border-radius: .4em;
+    top: -48%;
+    left: 80%;
+    width: max-content;
+    transition: 0.4s ease-in-out;
+}
+
+.historyBtn:hover:before {
+    opacity: 1;
+    visibility: visible;
 }
 
