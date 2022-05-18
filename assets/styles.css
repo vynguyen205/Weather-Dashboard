@@ -178,8 +178,14 @@
     border: none;
     background: transparent;
     font-size: 30px;
-    top: -5%;
-    left: 74%;
+    top: 1px;
+    right: 0px;
     transition: 0.4s ease-in-out;
 }
+
+/* @media screen and (max-width: 1600px) {
+    .mainContainer {
+        flex-direction: column-reverse;
+    }
+} */
 

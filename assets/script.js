@@ -4,12 +4,6 @@ var oneCallApi = `https://api.openweathermap.org/data/2.5/onecall`;
 var geoApi = `http://api.openweathermap.org/geo/1.0/direct`;
 var lat;
 var lon;
-var today = new Date ();
-var timeToday = moment();
-//getHours() -- current hour between 0-23
-var hour = today.getHours();
-//getMinutes() -- current minutes between 0-59
-var minute = today.getMinutes();
 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 //DOM Element Search
@@ -37,7 +31,7 @@ var visibility = document.querySelector(".visibility")
 var humidity = document.querySelector(".humid");
 var UVIndex = document.querySelector(".UVIndex");
 var cityHistory = document.querySelector(".searchHistory")
-// var  = document.querySelector(".");
+var sunset  = document.querySelector(".sunset");
 // var  = document.querySelector(".");
 // var  = document.querySelector(".");
 var weatherCards = document.querySelector(".mainWeatherCards");
@@ -47,6 +41,10 @@ const apiKey = "b256ae4b79d834242cabefb17b1c0012";
 
 //can't get timer to keep going at current time
 function getTime () {
+    var today = new Date ();
+    var timeToday = moment();
+//getHours() -- current hour between 0-23
+    var hour = today.getHours();
     // var time = (hour - 12) + ":" + minute;
     var time = timeToday.format("dddd, MMMM Do, h:mm");
     
@@ -66,6 +64,10 @@ function getTime () {
 
 }
 getTime();
+
+setInterval(function () {
+    getTime();
+}, 60000)
 
 //function to displayed current weather data when searched for city, zip or country code
 function getLocationWeather(city) {
@@ -125,6 +127,11 @@ function getWeatherInfo (latitude, longitude){
 
         var weatherUV = Math.round(data.current.uvi * 10) / 10;
             UVIndex.textContent = `UV | ${weatherUV}%`;
+            
+        var weatherSunset = data.current.sunset;
+        var sunsetConvert = moment(weatherSunset * 1000)
+            sunset.textContent = sunsetConvert;
+
 
 
         let output = '';
@@ -179,23 +186,27 @@ function searchCity(event) {
 
         localStorage.setItem ("city", newValue);
     }
+    displayStorage();
 }
 
 //adding to local storage
 
 function removeLocal(targetValue) {
+    var removeHistory = JSON.parse(localStorage.getItem('city'));
 
-    for (var i = 0; i < displayHistory.length; i++){
-          if (displayHistory[i] === targetValue){
+    for (var i = 0; i < removeHistory.length; i++){
+          if (removeHistory[i] === targetValue){
               //to remove a value from storage
-              displayHistory.splice(i,1);
+              removeHistory.splice(i,1);
           };
         }
-    localStorage.setItem("city",JSON.stringify(displayHistory))
+    localStorage.setItem("city",JSON.stringify(removeHistory))
+
+
 }
 
-var displayHistory = JSON.parse(localStorage.getItem('city'));
 function displayStorage() {
+    var displayHistory = JSON.parse(localStorage.getItem('city'));
     //create html element to append
 	let output = '';
 	if (displayHistory) {
