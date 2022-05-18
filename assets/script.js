@@ -45,6 +45,7 @@ var weatherCards = document.querySelector(".mainWeatherCards");
 //Openweather API key
 const apiKey = "b256ae4b79d834242cabefb17b1c0012";
 
+//can't get timer to keep going at current time
 function getTime () {
     // var time = (hour - 12) + ":" + minute;
     var time = timeToday.format("dddd, MMMM Do, h:mm");
@@ -177,8 +178,6 @@ function searchCity(event) {
         var newValue = JSON.stringify(array);
 
         localStorage.setItem ("city", newValue);
-
-        removeLocal(newValue);
     }
 }
 
@@ -186,23 +185,25 @@ function searchCity(event) {
 
 function removeLocal(targetValue) {
 
-    for (var i = 0;i<newValue.length;i++){
-          if (newValue[i]===targetValue){
-              newValue.splice(i,1);
+    for (var i = 0; i < displayHistory.length; i++){
+          if (displayHistory[i] === targetValue){
+              //to remove a value from storage
+              displayHistory.splice(i,1);
           };
         }
-    localStorage.setItem("city",JSON.stringify(newValue))
+    localStorage.setItem("city",JSON.stringify(displayHistory))
 }
 
+var displayHistory = JSON.parse(localStorage.getItem('city'));
 function displayStorage() {
-	var displayHistory = JSON.parse(localStorage.getItem('city'));
-
+    //create html element to append
 	let output = '';
 	if (displayHistory) {
 		for (var i = 0; i < displayHistory.length; i++) {
 			output += /*html*/ `
             <div class="searchHistory">           
-            <button class="historyBtn" data-hover="⚡️" data-id="${displayHistory[i]}">${displayHistory[i]}</button>
+                <button class="historyBtn" data-hover="⚡️" data-id="${displayHistory[i]}">${displayHistory[i]}</button>
+                <button class="removeBtn" data-id="${displayHistory[i]}">⚡️</button>
             </div>
         `;
 		}
@@ -210,6 +211,12 @@ function displayStorage() {
 	} else {
 		console.log('No History to display');
 	}
+    //remove from local storage
+    $(".removeBtn").on("click",function(){
+        var cityRemove=$(this).attr("data-id")
+        removeLocal(cityRemove)
+       location.reload()
+    })
 }
 
 displayStorage();
@@ -219,9 +226,6 @@ for (var b = 0; b < histBtn.length; b++) {
 	histBtn[b].addEventListener('click', function (event) {
 		var value = event.target.getAttribute('data-id');
 		getLocationWeather(value);
-        var remove = event.target.getAttribute('data-hover');
-        removeLocal(remove);
-        location.reload()
 	});
 }
 

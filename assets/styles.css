@@ -6,6 +6,7 @@
     box-sizing: border-box;
     letter-spacing: 3px;
     font-weight: 300;
+    color: rgba(78, 57, 25, 0.957);
 }
 
 .mainContainer {
@@ -22,7 +23,7 @@
 .currentTime {
     font-size: 50px;
     font-weight: 600;
-    color:rgb(160, 183, 246)
+    color:rgba(175, 188, 227, 0.97)
 }
 
 .greeting {
@@ -39,11 +40,15 @@
 
 
 .eachCard {
-    border: solid 1px; 
     border-radius: 25px;
     width: 200px;
     height: 270px;
     margin: 15px;
+    background: rgb(181,189,217);
+    background: rgb(181,189,217);
+    background: linear-gradient(90deg, rgba(181,189,217,0.5835734870317003) 100%, rgba(214,215,219,0.76109375) 100%); 
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+   
 }
 
 .flex {
@@ -57,6 +62,7 @@
     justify-content: center; 
     width: 25%;
     height: 100vh;
+    background-color: rgb(253, 253, 253);
 }
 
 .forecastContainer{
@@ -104,6 +110,7 @@
     background: linear-gradient(90deg, rgba(181,189,217,0.5835734870317003) 100%, rgba(214,215,219,0.76109375) 100%);   
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+
 .cityWeatherContainer div {
     margin: 10px 30px;
 }
@@ -125,13 +132,11 @@
 .todayDate {
     font-size: 30px;
     text-transform: capitalize;
-    /* color: rgba(116, 116, 116, 0.777) */
 }
 
 .description {
     font-size: 17px;
     text-transform: capitalize;
-    color: rgba(116, 116, 116, 0.777);
 }
 
 .displayTemp {
@@ -146,6 +151,10 @@
     align-items: center;
 }
 
+.searchHistory{
+    position: relative;
+}
+
 .historyBtn {
     position: relative;
     border: none;
@@ -153,7 +162,6 @@
     font-size: 30px;
     font-weight: 200;
     text-transform: capitalize;
-    color: grey;
     margin: 15px;
     padding: 10px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -164,24 +172,14 @@
       rgba(214,215,219,0.76109375) 100%);
 }
 
-.historyBtn:before {
-    content: attr(data-hover);
-    visibility: hidden;
-    opacity: 0;
+/* can't get button to be relative to history button */
+.removeBtn {
     position: absolute;
-    background-color: transparent;
-    text-align: center;
-    padding: 6px;
-    font-size: 40px;
-    border-radius: .4em;
-    top: -48%;
-    left: 80%;
-    width: max-content;
+    border: none;
+    background: transparent;
+    font-size: 30px;
+    top: -5%;
+    left: 74%;
     transition: 0.4s ease-in-out;
-}
-
-.historyBtn:hover:before {
-    opacity: 1;
-    visibility: visible;
 }
 
