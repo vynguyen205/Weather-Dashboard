@@ -1,7 +1,7 @@
 //global variables
 // var searchHist= [];
 var oneCallApi = `https://api.openweathermap.org/data/2.5/onecall`;
-var geoApi = `http://api.openweathermap.org/geo/1.0/direct`;
+var geoApi = `https://api.openweathermap.org/geo/1.0/direct`;
 var lat;
 var lon;
 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -111,7 +111,7 @@ function getWeatherInfo (latitude, longitude){
 
         //set vars for weather Information
         var weatherIconMain = data.current.weather[0].icon;
-            weatherIcon.src =  `http://openweathermap.org/img/wn/${weatherIconMain}@4x.png`
+            weatherIcon.src =  `http://openweathermap.org/img/wn/${weatherIconMain}@2x.png`
 
         var weatherTemp = data.current.temp;
             displayTemp.textContent = `${Math.ceil(weatherTemp)}°`;
@@ -128,9 +128,9 @@ function getWeatherInfo (latitude, longitude){
         var weatherUV = Math.round(data.current.uvi * 10) / 10;
             UVIndex.textContent = `UV | ${weatherUV}%`;
             
-        var weatherSunset = data.current.sunset;
-        var sunsetConvert = moment(weatherSunset * 1000)
-            sunset.textContent = sunsetConvert;
+        // var weatherSunset = data.current.sunset;
+        // var sunsetConvert = moment(weatherSunset * 1000)
+        //     sunset.textContent = sunsetConvert;
 
 
 
@@ -146,7 +146,7 @@ function getWeatherInfo (latitude, longitude){
 				output += /*html*/ `
                 <div class="eachCard">
                     <div class="flex">
-                        <img class="dailyWeatherIcon"  src= "http://openweathermap.org/img/wn/${dailyIcon}@4x.png"alt= "Weather Icon">
+                        <img class="dailyWeatherIcon"  src= "http://openweathermap.org/img/wn/${dailyIcon}@2x.png"alt= "Weather Icon">
                         <div class="dailyDt">${dailyDtFormat}</div>
                         <div class="dailyTemp">${Math.ceil(dailyWeather)}°</div>
                     </div>
