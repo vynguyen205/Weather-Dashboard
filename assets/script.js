@@ -32,8 +32,6 @@ var humidity = document.querySelector(".humid");
 var UVIndex = document.querySelector(".UVIndex");
 var cityHistory = document.querySelector(".searchHistory")
 var sunset  = document.querySelector(".sunset");
-// var  = document.querySelector(".");
-// var  = document.querySelector(".");
 var weatherCards = document.querySelector(".mainWeatherCards");
 
 //Openweather API key
