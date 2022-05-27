@@ -1,7 +1,7 @@
 //global variables
 // var searchHist= [];
 var oneCallApi = `https://api.openweathermap.org/data/2.5/onecall`;
-var geoApi = `http://api.openweathermap.org/geo/1.0/direct`;
+var geoApi = `https://api.openweathermap.org/geo/1.0/direct`;
 var lat;
 var lon;
 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
