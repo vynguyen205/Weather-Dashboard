@@ -33,6 +33,7 @@ var UVIndex = document.querySelector(".UVIndex");
 var cityHistory = document.querySelector(".searchHistory")
 var sunset  = document.querySelector(".sunset");
 var weatherCards = document.querySelector(".mainWeatherCards");
+var snapshot = document.querySelector("#snapshot");
 
 //Openweather API key
 const apiKey = "b256ae4b79d834242cabefb17b1c0012";
@@ -130,8 +131,6 @@ function getWeatherInfo (latitude, longitude){
         // var sunsetConvert = moment(weatherSunset * 1000)
         //     sunset.textContent = sunsetConvert;
 
-
-
         let output = '';
 			//loop through daily forecast
 			for (var d = 1; d < 7; d++) {
@@ -152,6 +151,48 @@ function getWeatherInfo (latitude, longitude){
             `;
 			}
 			$('#dailyForecast').html(output);
+
+        let output2 = '';
+            //get daily weather info
+            const currentDew = Math.ceil(data.current.dew_point);
+            const currentWindSpeed = data.current.wind_speed;
+            const currentVisibility = Math.floor(data.current.visibility / 1609); //convert to miles
+            const currentClouds = data.current.clouds;
+
+            output2 = /*html*/ `
+                <div class="littleCard">
+                    <div class=outsideContainer>
+                        <span>💧</span>
+                        <div class="littleContainer">
+                            <div>Dew Point</div>
+                            <div class="bold">${currentDew}°</div>
+                        </div>
+                    </div>
+                    <div class=outsideContainer>
+                        <span>💨</span>
+                        <div class="littleContainer">
+                            <div>Wind Speed</div>
+                            <div class="bold">${currentWindSpeed} mph</div>
+                        </div>
+                    </div>
+                    <div class=outsideContainer>
+                        <span>🙈</span>
+                        <div class="littleContainer">
+                            <div>Visibility</div>
+                            <div class="bold">${currentVisibility} mi</div>
+                        </div>
+                    </div>
+                    <div class=outsideContainer>
+                        <span>☁️</span>
+                        <div class="littleContainer">
+                            <div>Clouds</div>
+                            <div class="bold">${currentClouds}%</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $(snapshot).html(output2);
+
 		});
 }
 
