@@ -50,6 +50,7 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
    
 }
+
 .snapshotP {
     margin: 5rem 3rem 1rem;
     padding-bottom: 10px; 
@@ -104,7 +105,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center;  */
     width: 25%;
     height: 100vh;
     background-color: rgb(253, 253, 253);
