@@ -1,9 +1,10 @@
 //global variables
-require('dotenv').config();
-console.log(process.env)
 var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 //Openweather API key
-// const process.env.API_KEY = "b256ae4b79d834242cabefb17b1c0012";
+const API_KEY = "42ef51f916ff136bded67a0d9e0ee75a";
+const GEOAPI = 'http://api.openweathermap.org/geo/1.0/direct';
+const CURRENTWEATHER = 'https://api.openweathermap.org/data/2.5/weather';
+const DAILYWEATHER = 'https://api.openweathermap.org/data/2.5/forecast/daily';
 
 function getTime () {
     var today = new Date ();
@@ -38,9 +39,8 @@ setInterval(function () {
 function getLocationWeather(city) {
     //fetch api call
     // var geoApi = `https://api.openweathermap.org/geo/1.0/direct`;
-    fetch(`${process.env.GEOAPI}?q=${encodeURI(city)}&limit=5&appid=${process.env.API_KEY}`)
+    fetch(`${GEOAPI}?q=${encodeURI(city)}&limit=5&appid=${API_KEY}`)
     .then(function (response) {
-        console.log(response);
         return response.json();
     })
     .then(function (data){
@@ -49,7 +49,8 @@ function getLocationWeather(city) {
         var lat = data[0].lat;
         var lon = data[0].lon;
         //pasting the grabbed lat and lon to get weather info
-        getWeatherInfo(lat, lon)
+        getWeatherInfo(lat, lon);
+        getDailyInfo(lat, lon);
         //display city name
         var CTName = document.querySelector(".cityName"); 
         CTName.textContent = "📍 " + city;
@@ -61,115 +62,125 @@ getLocationWeather("Irvine")
 
 // one call Fecth
 function getWeatherInfo (latitude, longitude) {
-    // var oneCallApi = `https://api.openweathermap.org/data/2.5/onecall`;
-fetch(`${process.env.ONECALLAPI}?lat=${latitude}&lon=${longitude}&units=imperial&appid=${process.env.API_KEY}`)
+fetch(`${CURRENTWEATHER}?lat=${latitude}&lon=${longitude}&units=imperial&appid=${API_KEY}`)
     .then(function (response) {
         return response.json();
     })
     .then(function (data){
-        console.log(`ONECALL-API: `, data);
+        console.log(`CURRENT WEATHER API: `, data);
         
         //get date
-        var UTCDate = data.current.dt;
+        var UTCDate = data.dt;
         var locationDate = new Date(UTCDate * 1000) // 5/15/22
         var formatedDate = days[locationDate.getDay()]; //sun
         var todaysDate = document.querySelector(".todayDate");
         todaysDate.textContent= formatedDate;
         
         //set vars for weather Information
-        var weatherIconMain = data.current.weather[0].icon;
+        var weatherIconMain = data.weather[0].icon;
         var weatherIcon = document.querySelector(".weatherIcon");
         weatherIcon.src =  `http://openweathermap.org/img/wn/${weatherIconMain}@2x.png`
         
-        var weatherTemp = data.current.temp;
+        var weatherTemp = data.main.temp;
         var displayTemp = document.querySelector(".displayTemp");
         displayTemp.textContent = `${Math.ceil(weatherTemp)}°`;
         
-        var weatherFeels = data.current.feels_like;
+        var weatherFeels = data.main.feels_like;
         var feelsLike = document.querySelector(".feelsLike");
         feelsLike.textContent = `RealFeel | ${Math.ceil(weatherFeels)}°`;
         
-        var weatherDescription = data.current.weather[0].description;
+        var weatherDescription = data.weather[0].description;
         var description = document.querySelector(".description");
         description.textContent = weatherDescription;
         
-        var weatherHumid = data.current.humidity;
+        var weatherHumid = data.main.humidity;
         var humidity = document.querySelector(".humid");
         humidity.textContent = `Hum | ${weatherHumid}%`;
         
-        var weatherUV = Math.round(data.current.uvi * 10) / 10;
-        var UVIndex = document.querySelector(".UVIndex");
-        UVIndex.textContent = `UV | ${weatherUV}%`;
+        // var weatherUV = Math.round(data.main.uvi * 10) / 10;
+        // var UVIndex = document.querySelector(".UVIndex");
+        // UVIndex.textContent = `UV | ${weatherUV}%`;
         
         // var weatherSunset = data.current.sunset;
         // var sunsetConvert = moment(weatherSunset * 1000)
         //     sunset.textContent = sunsetConvert;
         
-        let output = '';
-        //loop through daily forecast
-        for (var d = 1; d < 7; d++) {
-            var dailyDt = data.daily[d].dt;
-            var dailyDtConvert = new Date(dailyDt * 1000);
-            var dailyDtFormat = days[dailyDtConvert.getDay()];
-            var dailyWeather = data.daily[d].temp.max;
-            var dailyIcon = data.daily[d].weather[0].icon;
-            
-            output += /*html*/ `
-            <div class="eachCard eachCard-blur">
-            <div class="flex">
-            <img class="dailyWeatherIcon"  src= "http://openweathermap.org/img/wn/${dailyIcon}@2x.png"alt= "Weather Icon">
-            <div class="dailyDt">${dailyDtFormat}</div>
-            <div class="dailyTemp">${Math.ceil(dailyWeather)}°</div>
-            </div>
-            </div>
-            `;
-        }
-        $('#dailyForecast').html(output);
+    });
+}
+
+//fetch Daily weather
+function getDailyInfo (lat, lon) {
+fetch(`${DAILYWEATHER}?lat=${lat}&lon=${lon}&cnt=${6}&appid=${API_KEY}`)
+.then(function(response) {
+    return response.json();
+})
+.then(function(data){
+    console.log(`Daily Forcast: `, data);
+
+    let output = '';
+    //loop through daily forecast
+    for (var d = 1; d < 7; d++) {
+        var dailyDt = data.daily[d].dt;
+        var dailyDtConvert = new Date(dailyDt * 1000);
+        var dailyDtFormat = days[dailyDtConvert.getDay()];
+        var dailyWeather = data.daily[d].temp.max;
+        var dailyIcon = data.daily[d].weather[0].icon;
         
-        let output2 = '';
-        //get daily weather info
-        const currentDew = Math.ceil(data.current.dew_point);
-        const currentWindSpeed = data.current.wind_speed;
-        const currentVisibility = Math.floor(data.current.visibility / 1609); //convert to miles
-        const currentClouds = data.current.clouds;
-
-        var snapshot = document.querySelector("#snapshot");
-
-        output2 = /*html*/ `
-        <div class="littleCard">
-        <div class=outsideContainer>
-        <span>💧</span>
-        <div class="littleContainer">
-        <div>Dew Point</div>
-        <div class="bold">${currentDew}°</div>
-        </div>
-        </div>
-        <div class=outsideContainer>
-        <span>💨</span>
-        <div class="littleContainer">
-        <div>Wind Speed</div>
-        <div class="bold">${currentWindSpeed} mph</div>
-        </div>
-        </div>
-        <div class=outsideContainer>
-        <span>🙈</span>
-        <div class="littleContainer">
-        <div>Visibility</div>
-        <div class="bold">${currentVisibility} mi</div>
-        </div>
-        </div>
-        <div class=outsideContainer>
-        <span>☁️</span>
-        <div class="littleContainer">
-        <div>Clouds</div>
-        <div class="bold">${currentClouds}%</div>
-        </div>
+        output += /*html*/ `
+        <div class="eachCard eachCard-blur">
+        <div class="flex">
+        <img class="dailyWeatherIcon"  src= "http://openweathermap.org/img/wn/${dailyIcon}@2x.png"alt= "Weather Icon">
+        <div class="dailyDt">${dailyDtFormat}</div>
+        <div class="dailyTemp">${Math.ceil(dailyWeather)}°</div>
         </div>
         </div>
         `;
-        $(snapshot).html(output2);
-        
-    });
+    }
+    $('#dailyForecast').html(output);
+    
+    let output2 = '';
+    //get daily weather info
+    const currentDew = Math.ceil(data.current.dew_point);
+    const currentWindSpeed = data.current.wind_speed;
+    const currentVisibility = Math.floor(data.current.visibility / 1609); //convert to miles
+    const currentClouds = data.current.clouds;
+
+    var snapshot = document.querySelector("#snapshot");
+
+    output2 = /*html*/ `
+    <div class="littleCard">
+    <div class=outsideContainer>
+    <span>💧</span>
+    <div class="littleContainer">
+    <div>Dew Point</div>
+    <div class="bold">${currentDew}°</div>
+    </div>
+    </div>
+    <div class=outsideContainer>
+    <span>💨</span>
+    <div class="littleContainer">
+    <div>Wind Speed</div>
+    <div class="bold">${currentWindSpeed} mph</div>
+    </div>
+    </div>
+    <div class=outsideContainer>
+    <span>🙈</span>
+    <div class="littleContainer">
+    <div>Visibility</div>
+    <div class="bold">${currentVisibility} mi</div>
+    </div>
+    </div>
+    <div class=outsideContainer>
+    <span>☁️</span>
+    <div class="littleContainer">
+    <div>Clouds</div>
+    <div class="bold">${currentClouds}%</div>
+    </div>
+    </div>
+    </div>
+    `;
+    $(snapshot).html(output2);
+});    
 }
 
 //filter search results and save it 
